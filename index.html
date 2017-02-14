@@ -1,0 +1,168 @@
+<html>
+<head>
+
+<script type="text/javascript">
+//remember: month is 0-based for some unknown reason
+window.riley_targetDate = new Date(2017, 01, 13, 18, 22);
+window.riley_early = [
+    "No Peeking",
+    "Shhhhhhh!",
+    "It's A Secret To Everyone",
+    "Hold Yer Horses!",
+    "I'll Never Tell",
+    "Listen: Do You Want To Know A Secret?",
+    "Can You Guess?",
+    "Wouldn't You Like To Know?",
+    "Guess You'll Have To Wait"
+];
+
+</script>
+
+<style type="text/css">
+body {
+    background-color: #ffffff;
+}
+.page-container {
+    margin-top: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+    width: 100%;
+
+    font-family: system, -apple-system, "Helvetica", "Segoe UI", "Arial", sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+.shown {
+    display: block;
+}
+
+#countdown {
+    text-align: center;
+}
+
+#countdown-text {
+    font-size: 400%;
+    font-weight: lighter;
+}
+
+#countdown-time {
+    margin-top: 0.8em;
+    font-size: 700%;
+    font-weight: bold;
+}
+
+#secret {
+}
+
+#secret h1 {
+    text-align: center;
+    font-size: 400%;
+}
+
+#secret .letter {
+    font-family: 'Futura', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    max-width: 30em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+}
+
+@media screen and (max-width: 760px) {
+    #secret .letter {
+        max-width: 100%;
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="page-container shown" id="countdown">
+    <div id="countdown-text"></div>
+    <div id="countdown-time"></div>
+</div>
+
+<div class="page-container hidden" id="secret">
+    
+</div>
+
+<script type="text/javascript">
+(function() {
+    function countdownSecondsRemaining() {
+        var now = new Date();
+        return (window.riley_targetDate - now) / 1000;
+    }
+
+    function countdownTick() {
+        var remainingSeconds = Math.floor(countdownSecondsRemaining()), 
+            remainingMinutes = 0,
+            remainingHours = 0,
+            remainingDays = 0;
+
+        if (remainingSeconds <= 0) {
+            countdownFinish();
+            return;
+        }
+        
+        remainingDays = Math.floor(remainingSeconds / (60 * 60 * 24));
+        remainingSeconds = remainingSeconds - (remainingDays  * 60 * 60 * 24);
+
+        if (remainingSeconds > 0) {
+            remainingHours = Math.floor(remainingSeconds / (60 * 60));
+            remainingSeconds = remainingSeconds - (remainingHours * 60 * 60);
+        }
+
+        if (remainingSeconds > 0) {
+            remainingMinutes = Math.floor(remainingSeconds / 60);
+            remainingSeconds = remainingSeconds - (remainingMinutes * 60);
+        }
+
+        remainingSeconds = remainingSeconds < 0 ? 0 : remainingSeconds;
+
+        
+        remainingSeconds = "" + (remainingSeconds < 10 ? "0" : "" ) + remainingSeconds;
+        remainingMinutes = "" + (remainingMinutes < 10 ? "0" : "" ) + remainingMinutes;
+        remainingHours = "" + (remainingHours < 10 ? "0" : "" ) + remainingHours;
+        remainingDays = "" + (remainingDays < 10 ? "0" : "" ) + remainingDays;
+
+        el = document.querySelector("#countdown-time");
+
+        el.innerHTML = remainingDays + ":" + remainingHours + ":" + remainingMinutes + ":" + remainingSeconds;
+        
+        window.setTimeout(countdownTick, 1000);
+    }
+
+    function countdownFinish() {
+        document.querySelector("#countdown").className = "page-container hidden";
+        document.querySelector("#secret").className = "page-container shown";
+    }
+
+    function startCountdown() {
+        if (countdownSecondsRemaining() > 0) {
+            var randomIndex = Math.floor(Math.random() * window.riley_early.length),
+                randomString = window.riley_early[randomIndex];
+
+            document.querySelector("#countdown-text").innerHTML = randomString;
+            countdownTick();
+        }
+        else {
+            countdownFinish();
+        }
+    }
+
+    if (document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", function () {
+            startCountdown();
+        });
+    }
+    else {
+        countdownFinish();
+    }
+})();
+
+</script>
+</body>
+</html>
