@@ -55,6 +55,7 @@ body {
 }
 
 #secret {
+    
 }
 
 #secret h1 {
@@ -69,13 +70,32 @@ body {
     margin-right: 1.5em;
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-device-width: 667px) {
     #secret .letter {
         max-width: 100%;
-        margin-left: 1em;
-        margin-right: 1em;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
     }
 }
+
+@media screen and (min-device-width: 1200px) {
+    #secret .letter {
+        display: inline-block;
+        background-color: red;
+        max-width: 30em;
+    }
+
+    #secret .video {
+        display: inline-block;
+        max-width: auto;
+    }
+
+    #secret .video video {
+        width: auto;
+        max-width: auto;
+    }
+}
+
 </style>
 </head>
 <body>
@@ -102,10 +122,10 @@ body {
     </div>
 
     <div class="video">
-        <video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
-        poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-            <source src="http://media.electriclemur.com/cfx/st/riley_eight_birthday_video.mp4" type='video/mp4'>
-            <!--<source src="MY_VIDEO.webm" type='video/webm'>-->
+        <video id="my-video" class="video-js" controls preload="auto" data-setup="{}">
+            <source src="rtmp://media.electriclemur.com/cfx/st/riley_eight_birthday_video.mp4" type='rtmp/mp4'>
+            <source src="http://cdn.electriclemur.com/misc/riley_eight_birthday_video.mp4" type="video/mp4">
+            
             <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser that
             <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
