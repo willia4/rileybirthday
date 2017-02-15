@@ -3,7 +3,7 @@
 
 <script type="text/javascript">
 //remember: month is 0-based for some unknown reason
-window.riley_targetDate = new Date(2017, 01, 13, 18, 22);
+window.riley_targetDate = new Date(2017, 01, 18, 0, 0);
 window.riley_early = [
     "No Peeking",
     "Shhhhhhh!",
@@ -17,22 +17,20 @@ window.riley_early = [
 ];
 
 </script>
-<link href="http://vjs.zencdn.net/5.16.0/video-js.css" rel="stylesheet">
+
 <style type="text/css">
 body {
     background-color: #ffffff;
 }
 .page-container {
     margin-top: 30px;
-    margin-left: 15px;
-    margin-right: 15px;
     width: 100%;
 
     font-family: system, -apple-system, "Helvetica", "Segoe UI", "Arial", sans-serif;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .shown {
@@ -55,44 +53,74 @@ body {
 }
 
 #secret {
-    
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #secret h1 {
     text-align: center;
     font-size: 400%;
+    
+    flex-basis: 100%;
 }
 
 #secret .letter {
     font-family: 'Futura', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    max-width: 30em;
-    margin-left: 1.5em;
-    margin-right: 1.5em;
 }
 
-@media screen and (max-device-width: 667px) {
+@media screen and (min-width: 1px) and (max-width: 640px) {
+    #secret .placeholder {
+        display: block;
+        width: 5%;
+    }
+
     #secret .letter {
+        background-color: blue;
+        width: 90%;        
+    }
+
+    #secret video {
+        width: 100%;
         max-width: 100%;
-        margin-left: 0.5em;
-        margin-right: 0.5em;
     }
 }
 
-@media screen and (min-device-width: 1200px) {
+@media screen and (min-width: 641px) and (max-width: 1099px) {
+    #secret .placeholder {
+        display: block;
+        width: 20%;
+    }
+
     #secret .letter {
-        display: inline-block;
-        background-color: red;
-        max-width: 30em;
+        width: 60%;
     }
 
-    #secret .video {
-        display: inline-block;
-        max-width: auto;
+    #secret video {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (min-width: 1100px) {
+    #secret {
+        vertical-align: top;
+    }
+    #secret .placeholder {
+        display:none;
     }
 
-    #secret .video video {
-        width: auto;
-        max-width: auto;
+    #secret .letter {
+        width: 30%;
+        margin-right: 1em;
+    }
+
+    #secret .video-container {
+        vertical-align: top;
+        width: 68%;
+    }
+
+    #secret video {
+        max-width: 100%;
     }
 }
 
@@ -107,6 +135,7 @@ body {
 
 <div class="page-container hidden" id="secret">
     <h1>Happy Birthday, Riley</h1>
+    <div class="placeholder"></div>
     <div class="letter">
         <p>Dear Riley,</p>
         <p>I hope that you are having a fantastic birthday. I hope that it is filled 
@@ -120,17 +149,12 @@ body {
         <p>I love you!</p>
         <p>-Eddie</p>
     </div>
+    <div class="placeholder"></div>
 
-    <div class="video">
-        <video id="my-video" class="video-js" controls preload="auto" data-setup="{}">
-            <source src="rtmp://media.electriclemur.com/cfx/st/riley_eight_birthday_video.mp4" type='rtmp/mp4'>
-            <source src="http://cdn.electriclemur.com/misc/riley_eight_birthday_video.mp4" type="video/mp4">
-            
-            <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-            </p>
-        </video>
+    <div class="video-container">
+    <video id="riley-video" controls preload="auto">
+        <source src="http://cdn.electriclemur.com/misc/riley_eight_birthday_video.mp4" type="video/mp4">
+    </video>
     </div>
 </div>
 
@@ -209,6 +233,5 @@ body {
 })();
 
 </script>
-<script src="http://vjs.zencdn.net/5.16.0/video.js"></script>
 </body>
 </html>
